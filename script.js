@@ -183,8 +183,9 @@ function showFinalScreen() {
   const image = caught
     ? isFemaleThief ? 'images/thief_female_trapped_jail.jpg' : 'images/thief_trapped.jpg'
     : isFemaleThief ? 'images/thief_female_scapped.jpg' : 'images/thief_escaped.jpg';
-  const suspectLabel = isFemaleThief ? 'La ladrona' : 'El ladrón';
-  const imageAlt = caught ? `${suspectLabel} ha sido atrapado` : `${suspectLabel} ha conseguido escapar`;
+  const imageAlt = caught
+    ? isFemaleThief ? 'La ladrona ha sido atrapada' : 'El ladrón ha sido atrapado'
+    : isFemaleThief ? 'La ladrona ha conseguido escapar' : 'El ladrón ha conseguido escapar';
   const message = caught
     ? `¡Has atrapado a ${activeThief}!`
     : 'Efectivamente el ladrón pasó por aquí, pero hemos llegado tarde y no se ha podido atrapar al maleante.';
