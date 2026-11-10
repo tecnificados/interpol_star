@@ -2,6 +2,10 @@
 
 Juego web educativo de detectives para practicar las capitales de los 27 países de la Unión Europea. El jugador trabaja desde una oficina de Interpol para perseguir a un ladrón por una ruta aleatoria de diez países.
 
+## Acceso en línea
+
+Puedes jugar desde [Interpol Star](https://tecnificados.github.io/interpol_star/).
+
 ## Cómo jugar
 
 1. Abre `index.html` en un navegador moderno.
