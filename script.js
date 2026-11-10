@@ -34,11 +34,11 @@ const STOLEN_OBJECTS = [
   { name: 'El grito', author: 'Edvard Munch', image: 'assets/objects/the-scream.jpg' },
   { name: 'El concierto', author: 'Johannes Vermeer', image: 'assets/objects/the-concert.jpg' },
   { name: 'La tormenta en el mar de Galilea', author: 'Rembrandt van Rijn', image: 'assets/objects/storm-galilee.jpg' },
-  { name: 'El Huevo de Fabergé «Tercer Huevo Imperial»', author: 'August Holmström (maestro orfebre)', image: 'assets/objects/faberge-third-egg.jpg' },
+  { name: 'El Huevo de Fabergé «Tercer Huevo Imperial»', author: 'August Holmström', image: 'assets/objects/faberge-third-egg.jpg' },
   { name: 'La Salera de Francisco I', author: 'Benvenuto Cellini', image: 'assets/objects/saliera-cellini.jpg' },
   { name: 'El Diamante Hope', image: 'assets/objects/hope-diamond.jpg' },
-  { name: 'El Códice Calixtino', author: 'Aymeric Picaud (atribución discutida)', image: 'assets/objects/codex-calixtinus.jpg' },
-  { name: 'El busto de Nefertiti', author: 'Tutmose (atribución)', image: 'assets/objects/nefertiti-bust.jpg' },
+  { name: 'El Códice Calixtino', author: 'Aymeric Picaud', image: 'assets/objects/codex-calixtinus.jpg' },
+  { name: 'El busto de Nefertiti', author: 'Tutmose', image: 'assets/objects/nefertiti-bust.jpg' },
 ];
 const THIEF_NAMES = [
   'Alfredo Pillastre',
@@ -75,9 +75,22 @@ let stolenObject = '';
 let activeThief = '';
 
 function updateClock() {
+  const now = new Date();
   clock.textContent = new Intl.DateTimeFormat('es-ES', {
     hour: '2-digit', minute: '2-digit', hour12: false,
-  }).format(new Date());
+  }).format(now);
+
+  const hour = now.getHours();
+  const greeting = hour >= 6 && hour < 12
+    ? 'Buenos días,'
+    : hour >= 12 && hour < 20
+      ? 'Buenas tardes,'
+      : 'Buenas noches,';
+  document.querySelector('#greeting').textContent = greeting;
+}
+
+function updateResolution() {
+  document.querySelector('#resolution').textContent = ` · ${screen.width} × ${screen.height} px`;
 }
 
 function shuffled(items) {
@@ -109,10 +122,9 @@ function renderQuestion() {
     <div class="case-header">
       <div class="case-heading">
         <div class="screen-eyebrow"><span class="live-dot"></span> RED SEGURA · CASO ACTIVO</div>
-        <div class="screen-logo">I<span>★</span></div>
         <div class="case-kicker">EXPEDIENTE #AR-042 · PARADA ${stopIndex + 1} DE ${ROUTE_LENGTH}</div>
-        <h1 class="case-title">¡Han robado<br><strong>${stolenObject.name}!</strong></h1>
-        ${stolenObject.author ? `<div class="item-author">de ${stolenObject.author}</div>` : ''}
+        <h1 class="case-title">¡Han robado<br><strong>${stolenObject.name}${stolenObject.author ? '' : '!'}</strong></h1>
+        ${stolenObject.author ? `<div class="item-author">de ${stolenObject.author}!</div>` : ''}
       </div>
       <img class="object-thumb" src="${stolenObject.image}" alt="Miniatura de ${stolenObject.name}">
     </div>
@@ -207,3 +219,5 @@ function showFinalScreen() {
 startButton.addEventListener('click', startCase);
 updateClock();
 setInterval(updateClock, 30_000);
+updateResolution();
+window.addEventListener('resize', updateResolution);
